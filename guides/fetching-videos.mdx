@@ -1,0 +1,105 @@
+---
+title: 'Fetching your Sora video library with Save Sora'
+description: 'Learn how Save Sora fetches your Sora library, what sources you can include, how to monitor fetch progress, and what to do when a fetch fails.'
+---
+
+Save Sora fetches your Sora library by opening a background Sora tab, injecting its own packaged code into that tab, and reading your videos from your existing logged-in session. Nothing is sent to an external server — the entire fetch runs locally inside your browser. This page explains how to start a fetch, what each source includes, what happens during the fetch, and how to handle common problems.
+
+## Before you start
+
+<Info>
+  Save Sora uses your existing logged-in Sora browser session. Make sure you are signed in to Sora in the same Chrome profile before clicking **Fetch Videos**.
+</Info>
+
+## Starting a fetch
+
+<Steps>
+  <Step title="Open the Save Sora popup">
+    Click the Save Sora extension icon in the Chrome toolbar. The popup opens on the **Overview** tab.
+  </Step>
+  <Step title="Choose your sources">
+    Click the **Sources** multi-select dropdown to open the source menu. Check one or more sources to include in the fetch.
+
+    | Source | What it includes |
+    |---|---|
+    | **Published** | Your own published videos from your Sora profile |
+    | **Drafts** | Private and unpublished generation drafts |
+    | **Likes** | Videos you have liked on Sora |
+    | **Cameos** | Videos where one of your characters appears as a supporting role |
+    | **Characters** | Videos built around your saved Sora characters |
+    | **Creators** | Videos from saved Sora creator profiles |
+
+    The dropdown label updates to show the names of all checked sources.
+  </Step>
+  <Step title="Click Fetch Videos">
+    Click the **Fetch Videos** button. Save Sora opens a minimized background Sora tab, injects its packaged fetch code, and begins reading your library. You do not need to interact with the Sora tab — it is managed automatically.
+  </Step>
+</Steps>
+
+## Fetch progress panel
+
+Once the fetch begins, a progress panel appears below the source selector. It shows everything you need to monitor the run without switching tabs.
+
+The panel includes:
+
+- **Stage label** — the current phase, such as `Opening Sora...` or `Fetching...`
+- **Detail line** — a finer-grained description of what Save Sora is doing right now
+- **Progress bar** — fills as the fetch advances through its stages
+- **Found count** — a live count of how many videos have been discovered, shown as `0 found`, `12 found`, and so on
+- **Elapsed time** — how long the current fetch has been running, shown as `0s elapsed`
+- **Source indicator** — which source is currently active, shown as `Source 1 of 3`
+
+You can expand or collapse the panel detail by clicking the toggle arrow at the top of the bar.
+
+## Pausing and cancelling
+
+Two controls appear in the progress panel while a fetch is active:
+
+- **Pause** — suspends the active fetch without discarding results already found. Click the button again (it updates to reflect the paused state) to resume.
+- **Cancel** — stops the fetch entirely and returns the popup to a restartable state. Any results collected before cancellation remain in the list.
+
+<Note>
+  You can close the popup while a fetch is running. The fetch continues in the background service worker and your results will be there when you reopen the popup.
+</Note>
+
+## Resumable fetches
+
+Fetches of the **Creators** and **Characters** sources can involve large crawls spanning many pages. Save Sora automatically writes IndexedDB checkpoints as it goes. If the fetch is interrupted — for example by closing the browser — the next time you open the popup you will see a **Resume** option instead of **Fetch Videos**. Clicking it picks up from the last saved checkpoint rather than starting over.
+
+To clear saved checkpoints without affecting other settings, go to **Settings → Storage → Clear resumable backup cache**.
+
+## Limiting the number of videos
+
+By default, Save Sora fetches everything it finds for your chosen sources. If you want to cap the result count, go to **Settings → Defaults → Max videos** and enter a number. Leave the field blank (its placeholder reads **Unlimited**) to fetch without a cap.
+
+<Tip>
+  A max video cap is useful when you only want to review the most recent items from a large library. Combine it with the **Newest** sort order for best results.
+</Tip>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="The fetch shows 0 videos">
+    Make sure you are signed in to Sora in the same Chrome profile. Open `https://sora.chatgpt.com`, verify you can see your videos, then try fetching again. If you selected a source like **Likes** or **Cameos** and have no content there, the count will legitimately be 0.
+  </Accordion>
+  <Accordion title="The fetch fails with an error">
+    Check that Chrome has access to `https://sora.chatgpt.com`. If the error mentions a network timeout, Sora may be slow to respond — wait a moment and click **Fetch Videos** again. Persistent errors can be reported on the [GitHub repository](https://github.com/alpha1337/save-sora).
+  </Accordion>
+  <Accordion title="The background Sora tab is visible">
+    Save Sora opens the Sora tab in a minimized window so it stays out of the way. If the window surfaces, you can minimize it manually. Do not close the Sora tab while a fetch is in progress.
+  </Accordion>
+  <Accordion title="I want to start a fresh fetch after a completed one">
+    After a fetch completes, the **Fetch Videos** button becomes a **Reset** button. Click it to clear the current working set and return to a clean state ready for a new fetch.
+  </Accordion>
+</AccordionGroup>
+
+## What to do next
+
+<CardGroup cols={2}>
+  <Card title="Reviewing and selecting" icon="list-check" href="/guides/reviewing-and-selecting">
+    Search, sort, and select the videos you want to keep after a fetch.
+  </Card>
+  <Card title="Downloading videos" icon="download" href="/guides/downloading">
+    Download your selected videos as a ZIP archive or individual files.
+  </Card>
+</CardGroup>

@@ -1,0 +1,48 @@
+---
+title: 'Fetching liked videos and character cameo appearances'
+description: 'How Save Sora reads your Sora likes and cameo appearances, what data is captured, and what to know before downloading others content.'
+---
+
+Save Sora provides two profile-based sources that go beyond your own posted videos: **Likes** and **Cameos**. Likes collects videos from other creators that you have liked on Sora. Cameos collects videos — made by other creators — in which your own Sora characters make an appearance. Both sources are read from your profile page at `sora.chatgpt.com/profile` using your existing logged-in browser session.
+
+## Likes
+
+The **Likes** source fetches videos that you have liked from other Sora creators. These are not videos you created — they are publicly posted videos from other accounts that you bookmarked with a like.
+
+The fetch reads up to **100 liked videos per batch** (`LIKES_BATCH_LIMIT = 100`). For accounts with large like libraries, Save Sora pages through the feed automatically.
+
+**Data captured for liked videos:**
+
+- Title and prompt from the original creator's post
+- Thumbnail preview
+- Video URL for downloading
+- Metadata such as like and view counts
+
+<Warning>
+Liked videos are content created by other Sora users, not by you. Before downloading video files, consider whether doing so is appropriate for your intended use. You can always export URLs and prompts without saving the video files themselves.
+</Warning>
+
+## Cameos
+
+The **Cameos** source (internal key: `characters`) fetches videos where your own Sora characters appear in other creators' content. This is useful for collecting every appearance of a character you have created, even when those appearances are in videos made by someone else.
+
+The fetch reads up to **100 cameo videos per batch** (`CHARACTERS_BATCH_LIMIT = 100`). Save Sora pages through the cameo feed automatically for larger libraries.
+
+**Data captured for cameo appearances:**
+
+- Title and prompt from the host video
+- Thumbnail preview
+- Video URL
+- Metadata from the original post
+
+<Note>
+Like Likes, cameo videos are produced by other creators. The content belongs to the account that posted it. Save Sora reads these entries from your profile's cameo feed and gives you access to the same URLs you would see by visiting your profile page manually.
+</Note>
+
+## Accessing both sources
+
+Both Likes and Cameos are read from your Sora profile page. To fetch either source, open the Sources dropdown in the popup and check **Likes**, **Cameos**, or both. You can combine them with any other source — for example, selecting Published, Likes, and Cameos in the same fetch gives you a combined list of your own videos, the videos you have liked, and every cameo your characters have made.
+
+<Tip>
+Cameos are especially useful if you want a complete record of where your characters have appeared across the Sora platform — including videos you did not create yourself.
+</Tip>

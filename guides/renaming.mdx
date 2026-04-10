@@ -1,0 +1,68 @@
+---
+title: 'Renaming Sora videos before you download'
+description: 'Use the Save Sora rename dialog to set custom titles that become the filenames in your downloaded ZIP archive or individual video files.'
+---
+
+Save Sora uses each video's title as the filename when it builds a ZIP archive or downloads individual files. Renaming a video in Save Sora lets you set exactly the name you want before anything is written to disk. Renamed titles are saved locally and survive popup closes, browser restarts, and even re-fetches. This page explains how to open the rename dialog, how the rename is stored, and how to reset a title back to its default.
+
+## Why rename before downloading
+
+The filename for each downloaded video is derived from the title Save Sora shows on the card. By default that title comes from the video's Sora metadata — the prompt text, discovery phrase, or video ID. Renaming gives you control over the final filename so your archive is organized the way you want it from the start.
+
+<Tip>
+  Rename your most important videos before clicking **Download Videos**. The ZIP will use your chosen names, which is much easier than renaming files manually after extraction.
+</Tip>
+
+## Opening the rename dialog
+
+<Steps>
+  <Step title="Find the video in the picker panel">
+    After a fetch, locate the video card you want to rename in the picker panel. You can use the **Search** input to find it quickly.
+  </Step>
+  <Step title="Click the edit icon on the card">
+    Each video card has an edit (pencil) icon button. Click it to open the **Rename Video** dialog.
+  </Step>
+  <Step title="Edit the title">
+    The **Rename Video** dialog opens with the current title pre-filled in a textarea labeled **Title**. The dialog header reads **Edit Title** and includes a description:
+
+    > Update the title Save Sora should use for this video when displaying it here and when building the downloaded filename.
+
+    Edit the text in the textarea to set your preferred title.
+  </Step>
+  <Step title="Click Save Title">
+    Click the **Save Title** button to confirm. The dialog closes and the card immediately updates to show your new title. Click **Cancel** to close without saving.
+  </Step>
+</Steps>
+
+## How renamed titles are stored
+
+Renamed titles are written to `chrome.storage.local` as title overrides keyed to each video's stable identifier. This means:
+
+- Closing and reopening the popup does not lose your renames.
+- Performing a new fetch does not overwrite your saved renames — the override is applied on top of any freshly fetched metadata.
+- Renamed titles are local to your browser profile and are never sent to any server.
+
+## Resetting a title
+
+If you want to restore a video's title to its original value, open the rename dialog, clear the textarea completely, and click **Save Title**. When the value submitted is empty, Save Sora falls back to the default title derived from the video's metadata.
+
+Alternatively, clearing all local storage from **Settings → Storage → Clear local storage** removes all title overrides along with other saved state. Use this only when you want a complete reset, because it also clears renamed titles, selection state, and your current working set.
+
+<Warning>
+  **Clear local storage** in Settings wipes all renamed titles, selection state, archived state, and the current working set. There is no undo.
+</Warning>
+
+## Titles and filenames
+
+The exact string you enter in the rename dialog becomes the filename. Save Sora sanitizes the title to produce a valid filename, replacing characters that are not allowed in filenames. Keep titles concise and avoid characters like `/`, `\`, `:`, `*`, `?`, `"`, `<`, `>`, and `|` to get the cleanest output filenames.
+
+## What to do next
+
+<CardGroup cols={2}>
+  <Card title="Downloading videos" icon="download" href="/guides/downloading">
+    Download your renamed videos as a ZIP archive or individual files.
+  </Card>
+  <Card title="Exporting prompts and URLs" icon="file-csv" href="/guides/exporting-prompts-and-urls">
+    Export a CSV of prompts or Sora page URLs for your selected videos.
+  </Card>
+</CardGroup>

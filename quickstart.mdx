@@ -1,80 +1,80 @@
 ---
-title: "Quickstart"
-description: "Start building awesome documentation in minutes"
+title: "Get started with Save Sora"
+description: "Fetch your Sora video library and download your first ZIP archive in five minutes — from opening the popup to saving the file."
 ---
 
-## Get started in three steps
+Save Sora's core workflow has two stages: **fetch**, which scans your Sora library and builds a local review list, and **download**, which streams your selected videos into a ZIP archive and saves it to your device. This page walks you through both from start to finish.
 
-Get your documentation site running locally and make your first customization.
+## Prerequisites
 
-### Step 1: Set up your local environment
+- Save Sora is installed in Chrome. If not, see [Install Save Sora in Chrome](/installation).
+- You are signed in to Sora at [sora.chatgpt.com](https://sora.chatgpt.com) in the same Chrome profile where the extension is installed.
 
-<AccordionGroup>
-  <Accordion icon="copy" title="Clone your docs locally">
-    During the onboarding process, you created a GitHub repository with your docs content if you didn't already have one. You can find a link to this repository in your [dashboard](https://dashboard.mintlify.com).
-    
-    To clone the repository locally so that you can make and preview changes to your docs, follow the [Cloning a repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) guide in the GitHub docs.
-  </Accordion>
-  <Accordion icon="rectangle-terminal" title="Start the preview server">
-    1. Install the Mintlify CLI: `npm i -g mint`
-    2. Navigate to your docs directory and run: `mint dev`
-    3. Open `http://localhost:3000` to see your docs live!
-    
-    <Tip>Your preview updates automatically as you edit files.</Tip>
-  </Accordion>
-</AccordionGroup>
+## Fetch and download your first archive
 
-### Step 2: Deploy your changes
+<Steps>
+  <Step title="Click the Save Sora icon to open the popup">
+    Click the Save Sora icon in the Chrome toolbar to open the popup dashboard. If you don't see it, click the puzzle-piece extensions menu and look for **Save Sora: Sora Bulk Downloader**.
 
-<AccordionGroup>
-  <Accordion icon="github" title="Install our GitHub app">
-    Install the Mintlify GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app).
-    
-    Our GitHub app automatically deploys your changes to your docs site, so you don't need to manage deployments yourself.
-</Accordion>
-<Accordion icon="palette" title="Update your site name and colors">
-    For a first change, let's update the name and colors of your docs site.
+    The first time the popup opens, it checks GitHub for available updates before showing the dashboard. Wait for the update check to complete — this usually takes a few seconds.
+  </Step>
+  <Step title="Select your sources">
+    In the **Overview** tab, choose which parts of your Sora library to scan:
 
-    1. Open `docs.json` in your editor.
-    2. Change the `"name"` field to your project name.
-    3. Update the `"colors"` to match your brand.
-    4. Save and see your changes instantly at `http://localhost:3000`.
+    | Source | What it fetches |
+    |---|---|
+    | **Published** (`profile`) | Your publicly published Sora videos |
+    | **Drafts** | Your unpublished draft videos |
+    | **Likes** | Videos you have liked |
+    | **Cameos** (`characters`) | Videos where you appear as a cameo character |
+    | **Cameo accounts** (`characterAccounts`) | Full cameo account feeds |
+    | **Creators** | Videos from creator feeds you follow |
 
-    <Tip>Try changing the primary color to see an immediate difference!</Tip>
-  </Accordion>
-</AccordionGroup>
+    You can select multiple sources in one scan.
+  </Step>
+  <Step title="Click Fetch Videos and wait for the scan">
+    Click **Fetch Videos**. Save Sora opens a minimized Sora tab in the background, injects its packaged code into that tab, and reads your library items from your signed-in session. A progress indicator shows the scan moving through the opening, source-fetch, and processing phases.
 
-### Step 3: Go live
+    Fetch time depends on the size of your library. A few hundred videos typically completes in under a minute.
+  </Step>
+  <Step title="Browse the list">
+    Once the fetch completes, your videos appear as cards in the review list. Use the search bar to filter by keyword, or use the sort control to order by newest, oldest, most likes, most views, or most remixed.
 
-<Accordion icon="rocket" title="Publish your docs">
-  1. Commit and push your changes.
-  2. Your docs will update and be live in moments!
-</Accordion>
+    To rename a video before downloading, click its title in the list and type a new name. Save Sora uses your renamed title as the filename when saving.
+  </Step>
+  <Step title="Check the videos you want">
+    Use the checkboxes next to each video to select what you want to download. You can also use **Select all** or **Deselect all** to manage your selection in bulk. Items you explicitly remove from the list are remembered across sessions.
+  </Step>
+  <Step title="Click Download Videos to save the ZIP">
+    Click **Download Videos**. Save Sora streams your selected files into a ZIP archive locally inside your browser, then saves the finished archive to your device using `chrome.downloads`. Chrome may prompt you to allow downloads from the extension — click **Allow**.
+
+    The ZIP filename includes the current date so multiple archives don't overwrite each other.
+  </Step>
+</Steps>
+
+<Tip>
+  You can close the popup at any point during a fetch or download — the scan and archive build continue running in the background service worker. Reopen the popup at any time to check progress.
+</Tip>
+
+## If no videos appear
+
+<Note>
+  If the review list is empty after a fetch, the most common cause is that Save Sora cannot find an active Sora session. Open [sora.chatgpt.com](https://sora.chatgpt.com) in the same Chrome profile, sign in, and then click **Fetch Videos** again.
+</Note>
+
+Other things to check if the list stays empty:
+
+- Make sure you selected at least one source before clicking **Fetch Videos**.
+- If you selected **Drafts** and have no draft videos saved in Sora, the source returns zero results — this is expected.
+- If you selected **Likes** and have never liked a video, the source also returns zero results.
 
 ## Next steps
 
-Now that you have your docs running, explore these key features:
-
 <CardGroup cols={2}>
-
-<Card title="Write Content" icon="pen-to-square" href="/essentials/markdown">
-  Learn MDX syntax and start writing your documentation.
-</Card>
-
-<Card title="Customize style" icon="palette" href="/essentials/settings">
-  Make your docs match your brand perfectly.
-</Card>
-
-<Card title="Add code examples" icon="square-code" href="/essentials/code">
-  Include syntax-highlighted code blocks.
-</Card>
-
-<Card title="API documentation" icon="code" href="/api-reference/introduction">
-  Auto-generate API docs from OpenAPI specs.
-</Card>
-
+  <Card title="Understand sources" icon="layer-group" href="/sources/overview">
+    Learn what each source fetches and which ones apply to your account.
+  </Card>
+  <Card title="Settings and updater" icon="gear" href="/configuration/settings">
+    Set a default source, change the theme, and configure the auto-updater.
+  </Card>
 </CardGroup>
-
-<Note>
-  **Need help?** See our [full documentation](https://mintlify.com/docs) or join our [community](https://mintlify.com/community).
-</Note>

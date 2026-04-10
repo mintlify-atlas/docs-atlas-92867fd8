@@ -1,0 +1,90 @@
+---
+title: 'Exporting video prompts and Sora URLs as CSV'
+description: 'Use the Save Sora split button to export a CSV of the AI prompts or Sora page URLs for your selected videos, with automatic date-stamped filenames.'
+---
+
+Save Sora can export metadata about your selected videos as a CSV file without downloading the video files themselves. The **Download Prompts/URLs** split button generates either a single-column CSV of the AI prompts used to create each selected video, or a single-column CSV of the Sora page URLs for each selected video. This page explains how the split button works, what each CSV contains, and practical use cases for both export types.
+
+## The Download Prompts/URLs split button
+
+The split button appears in the left sidebar summary panel after a fetch, alongside **Download Videos**. It has two interactive parts:
+
+- **Label button** — clicking the label text (`Download Prompts/URLs`) immediately exports the currently active export type (Prompts or URLs).
+- **Caret button** — clicking the `▾` caret opens a small dropdown menu with two options: **Prompts** and **URLs**. Selecting an option switches the active export type. The label button then exports that type on the next click.
+
+The active export type is indicated by which menu option has the selected state (shown with `aria-pressed="true"` in the menu). Prompts is the default.
+
+<Note>
+  Only videos that are currently checked (selected) in the picker panel are included in the export. Archived and unselected videos are excluded.
+</Note>
+
+## Exporting prompts
+
+Selecting **Prompts** and clicking **Download Prompts/URLs** generates a CSV with a single column named `prompt`. Each row contains the prompt text for one selected video.
+
+- If a video has explicit prompt text, that is used.
+- If prompt text is missing, Save Sora falls back to the video's description field.
+- If neither is available, the video is skipped and a warning message shows how many items were skipped.
+
+The downloaded file is named `save-sora-selected-prompts-YYYY-MM-DD.csv`, where `YYYY-MM-DD` is today's date.
+
+```
+prompt
+"a slow-motion shot of a red fox running through a snowy forest"
+"cinematic aerial view of a coastal city at sunset"
+```
+
+## Exporting URLs
+
+Selecting **URLs** and clicking **Download Prompts/URLs** generates a CSV with a single column named `url`. Each row contains the Sora review page URL for one selected video.
+
+- Published videos and liked videos map to `https://sora.chatgpt.com/p/<post-id>`.
+- Draft-backed videos map to either `/p/<id>` (if the generation has a public post ID) or `/d/<generation-id>` (for private draft links).
+- If no URL can be resolved for a video, it is skipped and a warning message reports the skipped count.
+
+The downloaded file is named `save-sora-selected-urls-YYYY-MM-DD.csv`, where `YYYY-MM-DD` is today's date.
+
+```
+url
+"https://sora.chatgpt.com/p/s_abc123xyz"
+"https://sora.chatgpt.com/p/s_def456uvw"
+```
+
+## Switching between export types
+
+<Steps>
+  <Step title="Click the caret">
+    Click the `▾` caret button on the right side of the **Download Prompts/URLs** split button to open the export type menu.
+  </Step>
+  <Step title="Choose an export type">
+    Click **Prompts** or **URLs** in the dropdown. The menu closes and the active export type updates.
+  </Step>
+  <Step title="Click the label to export">
+    Click the **Download Prompts/URLs** label button to download the CSV for the now-active export type.
+  </Step>
+</Steps>
+
+## Use cases
+
+<AccordionGroup>
+  <Accordion title="Keep a record of prompts for recreation">
+    Export prompts before downloading or archiving a batch of videos. The CSV gives you a plain-text record of the prompts you used, which you can paste back into Sora or another AI tool to recreate or iterate on similar content.
+  </Accordion>
+  <Accordion title="Share or catalogue Sora page links">
+    Export URLs to build a shareable list of links to your published Sora videos. Open the CSV in a spreadsheet to add notes, tags, or categorization alongside each link.
+  </Accordion>
+  <Accordion title="Archive metadata separately from video files">
+    Exporting prompts and URLs alongside your downloaded video files gives you a lightweight metadata archive. If you ever need to restore context for a video without the file, the prompt and URL export is much smaller to store and share than the video itself.
+  </Accordion>
+</AccordionGroup>
+
+## What to do next
+
+<CardGroup cols={2}>
+  <Card title="Reviewing and selecting" icon="list-check" href="/guides/reviewing-and-selecting">
+    Learn how to search, filter, and select the right videos before exporting.
+  </Card>
+  <Card title="Downloading videos" icon="download" href="/guides/downloading">
+    Download your selected videos as a ZIP archive or individual files.
+  </Card>
+</CardGroup>

@@ -1,0 +1,101 @@
+---
+title: "Troubleshooting common Save Sora issues"
+description: "Fix the most common Save Sora problems: empty fetch results, stuck progress, failed ZIP downloads, lost renamed titles, and updater folder link errors."
+---
+
+Save Sora is designed to be straightforward to use, but a few common situations can cause unexpected behavior. This page covers the issues reported most often and explains exactly what to do in each case. If your situation is not listed here, check the [Settings](/configuration/settings) and [Storage](/configuration/storage) pages for additional context on how Save Sora stores and manages data.
+
+<AccordionGroup>
+  <Accordion title="No videos appear after fetching">
+    Save Sora reads your library from your existing logged-in Sora session. If the fetch completes but the list is empty, the most common cause is not being signed in to Sora in the same Chrome profile.
+
+    **Steps to resolve:**
+    1. Open [sora.chatgpt.com](https://sora.chatgpt.com) in the same Chrome profile you are using the extension in.
+    2. Confirm that your videos appear there — if Sora itself shows an empty library or a sign-in prompt, sign in and wait for the page to load fully.
+    3. Return to the Save Sora popup and try fetching again.
+    4. Make sure the sources you selected (Published, Drafts, Likes, etc.) actually contain videos in your account.
+  </Accordion>
+
+  <Accordion title="The extension icon doesn't appear in the toolbar">
+    Chrome does not automatically pin every extension to the toolbar. The icon may be hidden in the extensions menu.
+
+    **Steps to resolve:**
+    1. Go to `chrome://extensions` and confirm that **Save Sora** is listed and its toggle is enabled. If it is disabled, enable it.
+    2. Click the **puzzle-piece icon** (Extensions menu) in Chrome's toolbar, find Save Sora in the list, and click the **pin icon** next to it.
+    3. The Save Sora icon will now appear in the toolbar permanently.
+  </Accordion>
+
+  <Accordion title="Fetch gets stuck or shows 0%">
+    A fetch can stall at 0% or mid-progress if Sora's pages are slow to load, if the hidden worker tab encounters an error, or if a previous fetch session left the extension in an inconsistent state.
+
+    **Steps to resolve:**
+    1. Click **Cancel** in the Save Sora popup to stop the current fetch.
+    2. Open [sora.chatgpt.com](https://sora.chatgpt.com) in a normal tab and confirm Sora is loading correctly and your content is visible.
+    3. Return to the popup and start a new fetch.
+    4. If you are fetching **Creators** or **Characters**, be aware that large libraries can take several minutes to crawl — the progress bar may move slowly but the fetch is still running. Wait a few minutes before cancelling.
+    5. If the problem persists, go to **Settings › Storage** and click **Clear resumable backup cache**, then try the fetch again.
+  </Accordion>
+
+  <Accordion title="Download fails or ZIP is empty">
+    A download failure is most often caused by Chrome not having permission to save files, or by a temporary issue with how the ZIP was assembled.
+
+    **Steps to resolve:**
+    1. Check your Chrome downloads folder — the ZIP may have saved under a name like `save-sora-videos.zip` or similar.
+    2. If Chrome shows a permission prompt asking whether the extension can download files, click **Allow**.
+    3. Open `chrome://settings/content/automaticDownloads` and confirm Save Sora is not blocked.
+    4. If the ZIP downloads but is empty or corrupt, switch to **Individual files** mode in **Settings › Download mode** and try the download again. This bypasses the ZIP assembly step.
+    5. If individual file downloads also fail, check that your system has enough free disk space and that Chrome has write access to the downloads folder.
+  </Accordion>
+
+  <Accordion title="The popup closes while downloading">
+    This is expected behavior. Save Sora's background service worker manages the download independently of the popup window, so closing the popup does not cancel an in-progress download.
+
+    **What to do:**
+    - Reopen the Save Sora popup at any time to check the current download progress.
+    - The progress bar and status will reflect the ongoing download even after reopening.
+    - Do not close Chrome itself during a download, as that will terminate the background worker.
+  </Accordion>
+
+  <Accordion title="'Developer mode extensions' warning in Chrome">
+    When you load an unpacked extension, Chrome periodically shows a banner warning that developer mode extensions are active. This is a Chrome security feature and is expected for all unpacked extensions.
+
+    **What to do:**
+    - Click the **X** on the warning banner to dismiss it for the current session.
+    - This warning does not indicate a problem with Save Sora — it appears for every unpacked extension regardless of its source.
+    - If you want to avoid the warning entirely, you can use the [built-in updater](/configuration/updater) to keep Save Sora current and avoid needing to reload it manually.
+  </Accordion>
+
+  <Accordion title="How to update to a new version manually">
+    If the built-in updater is not available or you prefer to update manually:
+
+    1. Go to the [Save Sora releases page on GitHub](https://github.com/alpha1337/save-sora/releases) and download the ZIP for the latest release.
+    2. Unzip the archive into the same folder you originally loaded as an unpacked extension (replace the existing files).
+    3. Open `chrome://extensions`, find Save Sora, and click the **reload icon** (circular arrow).
+    4. The updated version is now active.
+
+    See [Keeping Save Sora up to date](/configuration/updater) for details on how the built-in updater works and how to let it apply updates automatically.
+  </Accordion>
+
+  <Accordion title="Renamed titles were lost">
+    Custom video titles are stored in `chrome.storage.local`. If you cleared local storage — either by clicking **Clear local storage** in Settings or through Chrome's own extension data management — those titles are permanently removed.
+
+    **What to do:**
+    - There is no way to recover renamed titles after a local storage clear. Re-rename any videos you want to track by custom name.
+    - In the future, avoid using **Clear local storage** if you have renamed many videos and want to keep those names.
+  </Accordion>
+
+  <Accordion title="The updater says 'Install folder not linked'">
+    The updater needs a one-time link to the folder where Save Sora is installed so it can write updated files when a new release is available.
+
+    **Steps to resolve:**
+    1. Open the Save Sora popup. If an update is pending, the update gate will show a **Link Install Folder** button — click it.
+    2. If the gate is not shown, go to **Settings › Updater** and click **Relink folder**.
+    3. In the folder picker that opens, navigate to the folder you originally loaded as an unpacked extension and select it.
+    4. Click **Allow** when Chrome asks for read and write access.
+    5. The status row will update to show the folder as linked.
+
+    <Note>
+      If you are on Brave, the folder picker may not open due to the File System Access API being disabled by default. Enable `brave://flags/#file-system-access-api`, restart Brave, and try again.
+    </Note>
+  </Accordion>
+</AccordionGroup>

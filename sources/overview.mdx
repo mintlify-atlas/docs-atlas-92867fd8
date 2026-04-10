@@ -1,0 +1,54 @@
+---
+title: 'Sora sources you can fetch with Save Sora'
+description: 'Learn what a source is in Save Sora, explore all six source types — Published, Drafts, Likes, Cameos, Characters, and Creators — and how to combine them.'
+---
+
+Save Sora organizes your Sora content into six distinct **sources**, each corresponding to a different section of your account that the extension can read. When you open the popup and click the Sources dropdown on the Overview tab, you choose which sources to include before starting a fetch. You can select one source at a time or combine several — Save Sora will collect content from all selected sources in a single run and merge the results into your review list.
+
+## What is a source?
+
+A source is a named content feed that Save Sora knows how to read from your Sora account. Each source maps to a specific page or data endpoint within `sora.chatgpt.com`, and the extension reads that data using your existing logged-in browser session — no passwords, tokens, or cookies are ever entered manually.
+
+## The six sources
+
+| Source label | Internal key | What it contains |
+|---|---|---|
+| Published | `profile` | Your own publicly posted videos on your Sora profile page |
+| Drafts | `drafts` | Your unpublished video drafts saved in your Sora account |
+| Likes | `likes` | Videos from other creators that you have liked |
+| Cameos | `characters` | Videos where your Sora characters appear in other creators' content |
+| Characters | `characterAccounts` | Your saved Sora character accounts |
+| Creators | `creators` | Public video feeds from other Sora creators you add manually |
+
+## How to select sources
+
+Open the Save Sora popup and look for the **Sources** multi-select dropdown on the Overview tab. Click the dropdown to expand it, then check the boxes for each source you want to include. The button label updates to show which sources are active. When you start the fetch, Save Sora reads each selected source in sequence and combines all results.
+
+<Note>
+No sources are selected by default. You must choose at least one source before starting a fetch.
+</Note>
+
+## Combining sources
+
+You can check multiple sources at once. For example, selecting both **Published** and **Drafts** in the same fetch gives you a combined list of your posted videos and your saved drafts side by side. Selecting **Likes** alongside **Published** lets you see your own videos mixed with videos you have liked from other creators.
+
+<Tip>
+If you are backing up your account for the first time, start with **Published** and **Drafts** together to capture both your public videos and your private drafts in one pass.
+</Tip>
+
+## Source pages
+
+<CardGroup cols={2}>
+  <Card title="Published" icon="circle-check" href="/sources/published">
+    Your publicly posted videos on your Sora profile page.
+  </Card>
+  <Card title="Drafts" icon="file-pen" href="/sources/drafts">
+    Your unpublished video drafts saved in your Sora account.
+  </Card>
+  <Card title="Likes and Cameos" icon="heart" href="/sources/likes-and-cameos">
+    Videos you have liked and appearances of your characters.
+  </Card>
+  <Card title="Creators" icon="users" href="/sources/creators">
+    Public feeds from other Sora creators you add manually.
+  </Card>
+</CardGroup>

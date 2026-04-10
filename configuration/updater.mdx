@@ -1,0 +1,99 @@
+---
+title: "Keeping Save Sora up to date"
+description: "Save Sora's built-in updater checks GitHub every 30 minutes and can apply new releases automatically once your install folder is linked."
+---
+
+Save Sora is installed as an unpacked Chrome extension, which means Chrome's built-in auto-update mechanism does not apply. Instead, Save Sora ships its own updater that checks the GitHub releases API every 30 minutes and — once you have linked your install folder — can download and apply new releases automatically without you visiting GitHub.
+
+## How the updater works
+
+The background service worker registers a Chrome alarm named `saveSoraCheckForUpdates` that fires every 30 minutes while Chrome is running. On each alarm tick, the worker calls the GitHub releases API at `https://api.github.com/repos/alpha1337/save-sora/releases` (fetching up to 12 releases) and compares the latest release version against the currently installed manifest version. If a newer release is found, the updater downloads an update manifest asset named `save-sora-update-manifest.json` from that release and stages the update.
+
+When the popup opens, an **update gate** runs before the main dashboard appears. The gate moves through three steps:
+
+<Steps>
+  <Step title="Starting Save Sora">
+    The extension runtime and updater are initialized before the dashboard opens.
+  </Step>
+  <Step title="Checking GitHub for updates">
+    The updater contacts the GitHub releases API and validates your updater state. This step has a 15-second timeout.
+  </Step>
+  <Step title="Loading your dashboard">
+    Your saved settings, working set, and recent extension state are restored, then the dashboard opens.
+  </Step>
+</Steps>
+
+If you have already dismissed the gate for this session by clicking **Skip**, or if the extension is currently in the middle of a fetch, the gate is bypassed and any background update check runs silently.
+
+## Linking the install folder
+
+The updater needs filesystem access to the unpacked extension folder so it can write new files when applying an update. You grant this access once using Chrome's File System Access API.
+
+<Steps>
+  <Step title="Open the update gate or Settings">
+    When Save Sora detects an update or reports "Install folder not linked", a **Link Install Folder** button appears in the update gate. The same action is available via the **Relink folder** button in Settings › Updater.
+  </Step>
+  <Step title="Select your Save Sora folder">
+    A system folder picker opens. Navigate to the folder you originally loaded as an unpacked extension in `chrome://extensions` and select it.
+  </Step>
+  <Step title="Grant read and write access">
+    Chrome will ask you to confirm read and write access. Click **Allow**. Save Sora needs write access to replace extension files when applying updates.
+  </Step>
+  <Step title="Verification">
+    The updater reads `manifest.json` inside the selected folder and confirms the folder name matches the extension. If the folder is wrong, you will see an error and can try again.
+  </Step>
+</Steps>
+
+<Warning>
+  If you are using **Brave**, the File System Access API may be disabled by default for extensions. Enable `brave://flags/#file-system-access-api`, restart Brave, and then try **Link folder** again.
+</Warning>
+
+Once the folder is linked, the link record is stored in IndexedDB under the `saveSoraVolatileBackup` database so it survives a `chrome.storage.local` clear.
+
+## Automatic updates
+
+In **Settings › Updater**, the **Automatic updates** toggle controls whether Save Sora installs newly detected releases without prompting.
+
+- **Enabled** (default after linking): When a new release is found during the startup gate, Save Sora waits briefly to review the changelog, then downloads and applies the update automatically. After installation the extension reloads and reopens.
+- **Disabled**: The gate will show that an update is available and offer an **Install** button, but will not apply it without your confirmation. You can click **Skip** to proceed to the dashboard without installing.
+
+<Info>
+  Automatic updates only take effect after the install folder has been linked at least once. If the folder is not linked, the gate will always ask you to link it before installing anything.
+</Info>
+
+## Updater status row
+
+The **Updater status** section in Settings shows a live summary of your updater state:
+
+| Field | What it shows |
+|-------|--------------|
+| Version | The currently installed extension version (e.g. `Version 1.17.0`) |
+| Last checked | Timestamp of the most recent GitHub check, or `Never checked` |
+| Install folder | `Linked` when a folder handle is stored, or `Install folder not linked` |
+| Latest GitHub version | The most recent version found on GitHub, or `none` if no check has run |
+| Manifest / Package ZIP status | Whether the update assets were downloaded successfully |
+| Pending update | Whether an update is staged and ready to apply |
+
+### Check now
+
+Click **Check now** in Settings › Updater to run an immediate GitHub check outside the normal 30-minute interval. The update gate will appear and progress through the same three-step flow as startup.
+
+### Relink folder
+
+Click **Relink folder** if you have moved, renamed, or re-downloaded the Save Sora extension folder since you last linked it. This reopens the folder picker so you can select the new location.
+
+## Manual update (without the updater)
+
+If you prefer not to use the built-in updater or need to apply a release while the updater is not working:
+
+<Steps>
+  <Step title="Download the release ZIP">
+    Go to the [Save Sora GitHub releases page](https://github.com/alpha1337/save-sora/releases) and download the ZIP for the latest release.
+  </Step>
+  <Step title="Unzip the archive">
+    Extract the ZIP to the same folder you originally loaded as an unpacked extension, replacing the existing files.
+  </Step>
+  <Step title="Reload the extension">
+    Open `chrome://extensions`, find Save Sora, and click the reload icon (circular arrow). The new version will be active immediately.
+  </Step>
+</Steps>

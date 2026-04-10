@@ -1,0 +1,90 @@
+---
+title: "Save Sora: Back up your Sora video library"
+description: "Save Sora is an open-source Chrome extension that fetches, renames, and selectively downloads your Sora videos locally — nothing leaves your browser."
+---
+
+Save Sora is an open-source Chrome Manifest V3 extension built to help you back up your own Sora videos before they're gone. It opens an inactive Sora tab in your Chrome profile, injects its own packaged code into that tab, reads your library through your existing signed-in session, and presents everything in a popup dashboard where you can search, sort, rename, and selectively download exactly what you want.
+
+## Key features
+
+<CardGroup cols={2}>
+  <Card title="Bulk fetch" icon="download">
+    Pull published posts, drafts, liked videos, cameo appearances, and creator feeds in a single scan.
+  </Card>
+  <Card title="Rename before download" icon="pencil">
+    Edit any title directly in the list. Save Sora uses your renamed title as the downloaded filename.
+  </Card>
+  <Card title="Selective download" icon="check-square">
+    Check only the videos you want, then save them as a single ZIP archive or as individual files.
+  </Card>
+  <Card title="CSV export" icon="file-csv">
+    Export a spreadsheet of your video prompts and direct Sora page URLs for your own records.
+  </Card>
+  <Card title="Sort and search" icon="magnifying-glass">
+    Filter by keyword and sort by newest, oldest, most likes, most views, or most remixed.
+  </Card>
+  <Card title="Auto-updater" icon="arrows-rotate">
+    Save Sora checks GitHub Releases every 30 minutes and can self-update your unpacked install.
+  </Card>
+</CardGroup>
+
+## Architecture
+
+Save Sora has a deliberately small, inspectable architecture with no build step required for end users.
+
+| File | Role |
+|---|---|
+| `background.js` | Background service worker. Owns all persistent state, opens the inactive Sora worker tab, injects packaged code into that tab, coordinates ZIP archive builds, and runs the auto-updater alarm. |
+| `popup.html` / `popup.js` | Popup shell and bootstrap entrypoint. The popup is intentionally disposable — it can be closed and reopened while a fetch or download continues in the background. |
+| `popup/` | Modular popup app split by concern: `controllers/` for event handlers, `ui/` for rendering, `utils/` and shared helpers. |
+| `offscreen.html` / `offscreen.js` | Hidden extension page used only while building a ZIP archive. Streams selected video files into a local Blob URL so the final archive can be saved with `chrome.downloads`. |
+| `manifest.json` | Declares permissions (`downloads`, `scripting`, `storage`, `tabs`, `offscreen`, `alarms`), host access, the popup, and the background service worker. |
+
+At runtime the flow is:
+
+<Steps>
+  <Step title="User opens the popup and chooses sources">
+    The popup presents source options: Published, Drafts, Likes, Cameos (`characters`), cameo accounts (`characterAccounts`), and Creators. The user selects one or more and clicks **Fetch Videos**.
+  </Step>
+  <Step title="Background worker opens a Sora tab">
+    `background.js` opens or reuses a minimized, inactive Sora tab in the current Chrome profile.
+  </Step>
+  <Step title="Packaged code is injected">
+    The worker uses `chrome.scripting` to inject locally packaged extension code into the Sora tab. No remote JavaScript is loaded.
+  </Step>
+  <Step title="Library is read from the existing session">
+    The injected code reads the user's own Sora items — published videos, drafts, liked videos, cameo appearances, and creator feeds — from the signed-in session already present in the tab.
+  </Step>
+  <Step title="Working set is stored locally">
+    Results are written to `chrome.storage.local` and an IndexedDB volatile backup. The popup renders the list.
+  </Step>
+  <Step title="User reviews and downloads">
+    The user searches, sorts, renames, and checks items. Clicking **Download Videos** triggers the offscreen document to stream selected files into a ZIP archive, which is then saved with `chrome.downloads`.
+  </Step>
+</Steps>
+
+## Privacy posture
+
+Save Sora is designed so your data never leaves your browser.
+
+- The extension uses your existing logged-in Sora session. It does not ask you to paste passwords, tokens, or cookies.
+- Video titles, prompts, thumbnails, metadata, and download URLs are processed entirely within the browser.
+- Selected files are streamed into a local ZIP archive inside the browser. Only the finished ZIP is written to disk.
+- Auth tokens and cookies are not collected by the developer and are not sent to any backend server.
+- `chrome.storage.local` is used only for extension settings and local UI state: theme, default source, sort order, renamed titles, selection state, removed state, and downloaded state.
+- The extension does not run analytics or telemetry.
+
+<Warning>
+  Save Sora requires desktop Chrome. It does not work on mobile browsers, and it is not listed on the Chrome Web Store — it must be loaded as an unpacked extension directly from the GitHub repository.
+</Warning>
+
+## Get started
+
+<CardGroup cols={2}>
+  <Card title="Install the extension" icon="puzzle-piece" href="/installation">
+    Load Save Sora into Chrome in under two minutes — no build step required.
+  </Card>
+  <Card title="Quick start" icon="rocket" href="/quickstart">
+    Fetch your library, pick what to keep, and download your first ZIP in five minutes.
+  </Card>
+</CardGroup>

@@ -1,0 +1,84 @@
+---
+title: 'Reviewing and selecting videos in Save Sora'
+description: 'Search, sort, and select videos from your fetched Sora library using the picker panel, list and grid views, and bulk selection controls.'
+---
+
+After Save Sora finishes fetching your library, the picker panel fills with video cards representing every item found. Reviewing and selecting videos in Save Sora means choosing exactly which videos you want to download before anything is written to disk. This page covers searching, sorting, switching between list and grid views, selecting individual or multiple videos, and archiving items you want to exclude from the download.
+
+## The picker panel
+
+The picker panel is the main content area on the right side of the Overview tab. Each card shows the video's thumbnail, title, source badge, and a checkbox. The panel header shows a summary label (**Search Results**) and a count of how many videos are currently selected.
+
+Cards for downloaded videos and archived videos sink to the bottom of the list automatically so your active working set stays at the top.
+
+## Searching
+
+The **Search** input at the top of the left sidebar filters the picker panel in real time as you type. Save Sora normalizes the query and each video's searchable text into lowercase, accent-stripped tokens and checks that every word in your query appears as a whole word in the video's metadata. The search covers the video's title, prompt, description, caption, creator display name, username, and character account name — so you can find videos by any text associated with them, not just the title.
+
+Clear the search field to restore the full result list.
+
+<Tip>
+  Search is case-insensitive and accent-insensitive, but it requires whole-word matches. Searching for `cat` matches `cat` and `CAT`, but not `catfish`. Searching for `red fox` requires both `red` and `fox` to appear as whole words in the video's metadata.
+</Tip>
+
+## Sorting
+
+The **Sort** dropdown appears in the left sidebar after a fetch returns results. Choose from five options:
+
+| Option | Sort order |
+|---|---|
+| **Newest** | Most recently created first (default) |
+| **Oldest** | Oldest first |
+| **Most Likes** | Highest like count first |
+| **Most Views** | Highest view count first |
+| **Most Remixed** | Most remixed first |
+
+The sort order is applied immediately and persists for the session. You can set a default sort order that is applied after every new fetch under **Settings → Defaults → Default sort**.
+
+## List and grid views
+
+Two layout options are available in the picker header:
+
+- **List** — each video card spans the full width of the panel and shows more metadata per row. This is the default view.
+- **Grid** — compact thumbnail grid for scanning many videos at a glance.
+
+Click **List** or **Grid** to toggle between them. Your preferred layout can be saved as the default under **Settings → Defaults → Results layout**.
+
+## Selecting videos
+
+Every video card has a checkbox. Click the checkbox (or anywhere on the card body) to toggle selection for that video. Selected videos are included in downloads and exports.
+
+<Info>
+  The selection state is persisted in `chrome.storage.local`. If you close and reopen the popup, your selections are exactly where you left them.
+</Info>
+
+### Bulk selection controls
+
+Three buttons appear in the picker header when results are present:
+
+- **Select All** — marks every visible video card as selected. If the search field is active, only the currently visible (filtered) results are selected.
+- **Select None** — clears the entire selection.
+- **Archive Selected** — removes all currently selected videos from the active working set. Archived videos are not included in downloads or exports and sink to the bottom of the list. This action does not delete anything from Sora.
+
+### Selection summary
+
+The line below the **Search Results** label shows how many videos are currently selected. This count updates live as you check and uncheck cards.
+
+## Archiving individual videos
+
+To remove a single video from the working set without affecting the rest of your selection, click the archive (remove) button on its card. The card moves to the bottom of the list with an archived state indicator. Click the same button again to restore it to the active set.
+
+<Warning>
+  Archiving a video only removes it from the current working set inside Save Sora. It does not delete or unpublish the video on Sora.
+</Warning>
+
+## What to do next
+
+<CardGroup cols={2}>
+  <Card title="Renaming videos" icon="pencil" href="/guides/renaming">
+    Rename videos before you download so the filenames are exactly what you want.
+  </Card>
+  <Card title="Downloading videos" icon="download" href="/guides/downloading">
+    Download your selected videos as a ZIP archive or individual files.
+  </Card>
+</CardGroup>

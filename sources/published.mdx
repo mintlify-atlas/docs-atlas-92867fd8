@@ -1,0 +1,46 @@
+---
+title: 'Fetching your published Sora videos with Save Sora'
+description: 'How Save Sora fetches your publicly posted Sora profile videos, what metadata is captured per video including likes and views, and how to sort results.'
+---
+
+The **Published** source fetches the videos you have publicly posted to your Sora profile. These are the videos visible to anyone who visits your profile page at `sora.chatgpt.com/profile`. Save Sora reads them using your existing logged-in browser session — no credentials are entered manually — and loads the results directly into the popup review list.
+
+<Tip>
+Published is the most common source to start with. If you are backing up your Sora account for the first time, select Published first to capture your full library of posted videos.
+</Tip>
+
+## How fetching works
+
+When you select **Published** and start a fetch, Save Sora opens an inactive Sora tab in your current Chrome profile, injects packaged extension code into that tab using `chrome.scripting`, and reads your profile feed from the signed-in session already present in the browser.
+
+The fetch reads up to **100 videos per batch** (`PROFILE_LIMIT = 100`). For profiles with large libraries, Save Sora pages through the feed automatically until all available videos have been collected.
+
+## Data captured
+
+For each published video, Save Sora captures:
+
+- **Title** — the video's display name on your profile
+- **Prompt** — the text prompt used to generate the video
+- **Thumbnail** — the preview image displayed in the review list
+- **Video URL** — the direct link to the video file used for downloading
+- **Metadata** — like count, view count, and remix count
+
+## Sorting results
+
+After a fetch completes, you can sort the results using the **Sort** dropdown in the popup toolbar. The following sort options are available for published videos:
+
+| Sort option | Description |
+|---|---|
+| Newest | Most recently posted videos first |
+| Oldest | Earliest posted videos first |
+| Most Likes | Highest like count first |
+| Most Views | Highest view count first |
+| Most Remixed | Most frequently remixed first |
+
+<Note>
+Sort order applies to the review list displayed in the popup. It does not change which videos are fetched — Save Sora always reads your full published feed before applying the selected sort.
+</Note>
+
+## Selecting and downloading
+
+Once the review list is populated, check the videos you want to keep. Save Sora streams only the files you select into a locally built ZIP archive. The final ZIP is saved to your computer through Chrome's built-in download manager — no video data is sent to an external server.

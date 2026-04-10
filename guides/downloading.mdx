@@ -1,0 +1,93 @@
+---
+title: 'Downloading Sora videos with Save Sora'
+description: 'Download your selected Sora videos as a single ZIP archive or as individual files, monitor progress in the download overlay, and choose where files are saved.'
+---
+
+Save Sora downloads only the videos you explicitly select. Clicking **Download Videos** streams the selected files directly into a locally built ZIP archive (the default) or saves them as individual files, depending on the download mode you have chosen. All processing happens inside your browser — no files are routed through an external server. This page explains both download modes, what the progress overlay shows, how to cancel a download, and where Chrome saves the output.
+
+## Download modes
+
+Save Sora supports two download modes, set under **Settings → Defaults → Download mode**:
+
+<Tabs>
+  <Tab title="ZIP archive (default)">
+    All selected videos are streamed into a single ZIP archive built locally in the browser's offscreen document. Only the finished archive is written to disk via `chrome.downloads`. This keeps your downloads folder tidy when saving many videos at once.
+
+    The archive filename is generated automatically and includes a timestamp.
+  </Tab>
+  <Tab title="Individual files">
+    Each selected video is downloaded as a separate file. Chrome's download manager handles each file independently. Choose this mode when you prefer individual files over a single archive, or when you want Chrome to prompt you for a save location for each file.
+  </Tab>
+</Tabs>
+
+<Note>
+  The download mode setting stays as **ZIP archive** until you explicitly change it. Switching to **Individual files** and back is non-destructive — it only affects future downloads.
+</Note>
+
+## Starting a download
+
+<Steps>
+  <Step title="Select the videos you want">
+    Use the checkboxes in the picker panel to select the videos to download. The selection summary in the picker header shows how many are selected.
+  </Step>
+  <Step title="Click Download Videos">
+    Click the **Download Videos** button in the left sidebar summary panel. The download overlay appears immediately.
+  </Step>
+  <Step title="Wait for the download to finish">
+    Save Sora streams the selected files into the archive (or queues them individually) and writes the output to Chrome's default downloads folder when complete.
+  </Step>
+</Steps>
+
+## Download progress overlay
+
+Once a download starts, a full-screen **Download Progress** overlay appears over the popup. It shows:
+
+- **Title** — the name of the video currently being processed
+- **Count** — how many files have been completed out of the total, shown as `X / Y`
+- **Percent** — the current completion percentage
+- **Progress bar** — a visual fill bar that advances as each file is processed
+
+You can close the popup while a download runs. The download continues in the background service worker. When you reopen the popup the overlay resumes showing the current progress.
+
+## Cancelling a download
+
+Click the **Cancel** button at the bottom of the download overlay to stop the download. Any files already saved to disk are kept. The popup returns to the selection state so you can adjust your selection and try again.
+
+## After the download completes
+
+When all selected files have been saved, a brief Ko-fi tip prompt appears inside the overlay as a thank-you message. You can dismiss it or support the project with a tip. The **Cancel** button changes to a **Return** button that takes you back to the picker panel.
+
+<Tip>
+  Rename your videos before downloading to control the filenames inside the ZIP or the names of individual downloaded files. See [Renaming videos](/guides/renaming) for details.
+</Tip>
+
+## Where files are saved
+
+Save Sora uses `chrome.downloads` to write files to disk, which means Chrome saves them to its default downloads location — usually your system's **Downloads** folder, or wherever you have configured Chrome to save files.
+
+If Chrome asks for permission to download files the first time, allow it so the extension can save your selections.
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="The Download Videos button is not visible">
+    The button appears only after a fetch has completed and at least one video is in the working set. Make sure you have fetched videos and that the summary panel is visible in the left sidebar.
+  </Accordion>
+  <Accordion title="The download stalls or shows an error">
+    Individual video URLs can expire. Try clicking **Fetch Videos** again to refresh the working set, then start the download. If a video's URL is no longer valid, Save Sora will skip it and report how many items were skipped.
+  </Accordion>
+  <Accordion title="I want to re-download a video I already downloaded">
+    Downloaded videos show a **download again** button on their card. Click it to clear the downloaded state for that video and add it back to the queue for the next download.
+  </Accordion>
+</AccordionGroup>
+
+## What to do next
+
+<CardGroup cols={2}>
+  <Card title="Renaming videos" icon="pencil" href="/guides/renaming">
+    Control filenames inside the ZIP by renaming videos before you download.
+  </Card>
+  <Card title="Exporting prompts and URLs" icon="file-csv" href="/guides/exporting-prompts-and-urls">
+    Export a CSV of the AI prompts or Sora page URLs for your selected videos.
+  </Card>
+</CardGroup>

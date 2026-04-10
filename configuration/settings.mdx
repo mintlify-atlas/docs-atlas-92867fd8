@@ -1,0 +1,107 @@
+---
+title: "Configuring Save Sora's default settings"
+description: "Adjust Max videos, default sources, sort order, layout, theme, shell, and download mode — all stored locally and saved automatically."
+---
+
+Save Sora's Settings tab lets you control how the dashboard opens, how results are presented, and how downloads are packaged. Every setting is stored in `chrome.storage.local` on your machine — nothing is sent to a server — and changes take effect immediately without a manual save step. You can reach the Settings tab by clicking the gear icon (or the **Settings** label) inside the Save Sora popup or fullscreen tab.
+
+## Opening Settings
+
+Click the **Settings** tab inside the Save Sora popup or fullscreen tab. The panel is divided into a **Defaults** section on the left and a narrower rail on the right that holds **Updater** and **Storage** controls. This page covers the Defaults section. See [Keeping Save Sora up to date](/configuration/updater) and [Managing local storage](/configuration/storage) for the other two sections.
+
+## Defaults
+
+The Defaults section controls the initial state of each new session — what sources are selected, how results are sorted, and how the popup looks when it first opens.
+
+### Max videos
+
+| Field | Type | Placeholder |
+|-------|------|-------------|
+| Max videos | Number input | Unlimited |
+
+Enter a positive whole number to cap how many videos are fetched in a single run. Leave the field blank to fetch everything available in the selected sources. The cap applies per fetch, not per source.
+
+<Note>
+  Setting a low cap is useful when you only want a quick preview of recent content before committing to a full library download.
+</Note>
+
+### Default sources
+
+The **Default sources** multi-select determines which source checkboxes are pre-checked when the Overview tab opens. Pick one or more:
+
+| Label | Internal value | What it fetches |
+|-------|---------------|-----------------|
+| Published | `profile` | Your published Sora videos |
+| Drafts | `drafts` | Your draft videos |
+| Likes | `likes` | Videos you have liked |
+| Cameos | `characters` | Videos where you appear as a character |
+| Characters | `characterAccounts` | Videos from character accounts you own |
+| Creators | `creators` | Videos from creators you follow |
+
+<Info>
+  If no sources are selected here, the Overview tab opens with nothing pre-checked and you will need to pick sources manually before fetching.
+</Info>
+
+### Default sort
+
+Controls the sort order applied to results after each fetch completes. The selection persists across sessions.
+
+| Option | Description |
+|--------|-------------|
+| Newest | Most recently created first (default) |
+| Oldest | Oldest videos first |
+| Most Likes | Highest like count first |
+| Most Views | Highest view count first |
+| Most Remixed | Most remixed videos first |
+
+### Results layout
+
+Sets the initial presentation mode for the picker panel when results first appear.
+
+| Option | Description |
+|--------|-------------|
+| List | Single-column list with metadata |
+| Grid | Thumbnail grid for a visual overview |
+
+You can also toggle the layout on the fly using the list/grid buttons in the picker toolbar. Switching layout in the toolbar also updates this setting automatically.
+
+### Default theme
+
+Sets the color scheme used the next time the popup or fullscreen tab opens.
+
+| Option | Description |
+|--------|-------------|
+| Dark | Dark background with light text (default) |
+| Light | Light background with dark text |
+
+<Tip>
+  You can also toggle the theme with the sun/moon icon in the toolbar without visiting Settings. Both the toolbar toggle and this dropdown stay in sync.
+</Tip>
+
+### Default shell
+
+Determines which view the launcher opens Save Sora in by default.
+
+| Option | Description |
+|--------|-------------|
+| Fullscreen tab | Opens Save Sora as a full browser tab |
+| Windowed popup | Opens Save Sora as the standard extension popup |
+
+### Download mode
+
+Controls how selected videos are packaged when you start a download.
+
+| Option | Internal value | Behavior |
+|--------|---------------|----------|
+| ZIP archive | `archive` | Streams all selected videos into a single ZIP file (default) |
+| Individual files | `direct` | Downloads each selected video as a separate file |
+
+<Note>
+  ZIP archive is the default and stays the default until you explicitly change this setting. Individual files mode is useful if your browser or antivirus blocks large ZIP downloads, or if you want each video saved under its own filename immediately.
+</Note>
+
+## Saved automatically
+
+A **"Saved automatically."** status line at the bottom of the Settings panel confirms that your latest change was written to `chrome.storage.local`. You do not need to click a Save button — settings are persisted as you change them.
+
+If a save fails, the status line will show **"Could not save."** instead. This is rare and usually resolves by reopening the popup.

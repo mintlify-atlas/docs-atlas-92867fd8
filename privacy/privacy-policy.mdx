@@ -1,0 +1,93 @@
+---
+title: "Save Sora privacy policy"
+description: "How Save Sora handles your data: what is processed locally in your browser, what is never collected, and how your downloads stay on your device."
+---
+
+Save Sora is a Chrome extension designed so your data stays in your browser. This page explains what information the extension accesses, how it uses that information, what it does not collect, and who to contact with questions.
+
+<Note>
+  **Short version:** Save Sora processes your Sora video data locally inside your browser so you can review and download your own files. No auth tokens, cookies, or your Sora library are sent to a developer-owned server.
+</Note>
+
+## What Save Sora accesses
+
+To perform its single purpose, Save Sora reads the following from your existing logged-in Sora browser session:
+
+- Sora video titles, prompts, thumbnails, metadata, and downloadable video references
+- Your own published videos and drafts available through the current Sora session
+- OpenAI-hosted video and thumbnail URLs needed to preview or download items you select
+
+The extension uses the auth context already present in your own Sora tab to fetch your own data. This is different from the developer collecting or receiving your credentials — the auth context is used locally, inside your browser session, solely to support the extension's single purpose.
+
+<Info>
+  Save Sora does not ask you to paste passwords, tokens, or cookies. It uses the browser session you already have open with Sora.
+</Info>
+
+## How Save Sora uses your data
+
+Save Sora uses the information it accesses only to support downloading your own videos:
+
+- Build a review list of your Sora published videos and drafts
+- Let you search, sort, rename, and selectively choose files for backup
+- Download only the videos you explicitly select, either individually or packaged into a single local ZIP archive
+
+Selected files are streamed directly into a ZIP archive assembled locally inside your browser. Only the finished ZIP file is written to disk — nothing is uploaded.
+
+## Local storage
+
+Save Sora uses `chrome.storage.local` only for extension settings and local UI state. No Sora content is stored permanently by the extension.
+
+| Stored value | Purpose |
+|---|---|
+| Theme preference | Remembers your light or dark mode choice |
+| Default source | Remembers whether to load Published, Drafts, or Both |
+| Sort order | Remembers how you last sorted the list |
+| Renamed titles | Preserves custom names you assign to videos |
+| Selection state | Remembers which items you have checked |
+| Removed state | Remembers items you have dismissed from the list |
+| Downloaded state | Tracks which items you have already downloaded |
+| Fetch and download queue state | Allows the popup to recover after being closed mid-scan |
+
+## What Save Sora does not collect
+
+<Warning>
+  The following are never collected by the developer and are never sent to any external server:
+</Warning>
+
+- Passwords or personal account credentials
+- Auth tokens
+- Cookies
+- Your Sora library (titles, videos, or metadata uploaded to a backend)
+- Analytics or telemetry — there is no tracking in the current build
+
+The extension's core scripts all ship inside the extension package. No remote JavaScript or WebAssembly is fetched for core extension logic.
+
+## Downloads
+
+When you start a download, Save Sora uses Chrome's built-in download API to save files directly to your device. For multi-file downloads, a hidden extension document assembles the ZIP archive locally inside the browser before the single finished file is saved to disk. Nothing is routed through an external server.
+
+## Third-party content
+
+The Donate tab in the extension embeds a Ko-fi page. This is third-party page content separate from the extension's core logic — Ko-fi operates under its own privacy policy. The extension's content security policy explicitly allows only `ko-fi.com` frames within extension pages; no other third-party frames are permitted.
+
+Update checks connect to the GitHub API to compare version numbers. No personal data is sent in those requests.
+
+## Your choices
+
+- You can remove the extension at any time through Chrome's extension manager
+- You can clear all extension data through Chrome's extension settings
+- You choose which individual videos to download — nothing is downloaded automatically
+
+## Open source
+
+Save Sora is MIT-licensed open-source software. The full source code is available for inspection at [https://github.com/alpha1337/save-sora](https://github.com/alpha1337/save-sora).
+
+## Contact
+
+Questions or concerns about this privacy policy:
+
+- **Email:** caseyjardin@gmail.com
+- **Discord:** for.fox.sake
+- **Repository:** [github.com/alpha1337/save-sora](https://github.com/alpha1337/save-sora)
+
+_Last updated: March 30, 2026_

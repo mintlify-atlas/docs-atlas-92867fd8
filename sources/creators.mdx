@@ -1,0 +1,62 @@
+---
+title: 'Fetching content from other Sora creator profiles'
+description: 'How to add Sora creator profiles to Save Sora, configure crawl limits, and resume large creator fetches using IndexedDB checkpoints.'
+---
+
+The **Creators** source lets you fetch the public video feeds of other Sora creators you choose to monitor. Instead of reading only your own account, Save Sora visits the profile pages you specify and collects their publicly posted videos. This is useful for archiving content from a creator you follow before it disappears, or for building a local reference library from several profiles at once.
+
+## Adding creators
+
+To add one or more creators, open the Sources dropdown in the popup and check **Creators**. A dialog appears where you can enter the creators you want to fetch.
+
+Save Sora accepts the following input formats — one entry per line:
+
+```text
+binaryrot
+https://sora.chatgpt.com/profile/binaryrot
+@binaryrot
+```
+
+All three formats refer to the same profile. Paste as many creators as you need, one per line, then confirm. Save Sora stores your creator list and uses it whenever the Creators source is selected.
+
+## Concurrency and page caps
+
+Creator fetches run up to **8 concurrent profile requests** at a time (`CREATOR_PROFILE_FEED_LIMIT = 8`). This keeps the crawl fast while avoiding excessive load on the Sora platform.
+
+Each creator profile crawl is bounded by page caps that prevent runaway fetches:
+
+| Limit | Value | Description |
+|---|---|---|
+| Minimum page cap | 250 pages | The lowest cap applied to any creator crawl |
+| Maximum page cap | 50,000 pages | The absolute ceiling for any single creator |
+
+These caps apply per creator, not across the entire fetch. A creator with a very large library will be read up to the maximum page cap; smaller profiles complete before hitting either limit.
+
+## Resumable crawls
+
+Large creator fetches are automatically saved to an IndexedDB database as the crawl progresses. If you close the popup, pause the fetch, or if the browser interrupts the process, Save Sora can pick up from where it left off.
+
+<Note>
+Checkpoint data is stored locally in the browser's IndexedDB — it never leaves your device. Resume support means you do not need to restart a long creator crawl from the beginning if something interrupts it.
+</Note>
+
+## Frequently asked questions
+
+<AccordionGroup>
+  <Accordion title="Can I add a private or restricted Sora profile?">
+    No. The Creators source reads publicly available profile feeds. If a creator's profile is private or restricted, Save Sora will not be able to read it, just as you would not be able to view it manually in your browser without special access.
+  </Accordion>
+  <Accordion title="How many creators can I add at once?">
+    There is no hard limit on the number of creator profiles you can add. However, fetching a large number of profiles in one run will take longer, since each profile is crawled sequentially (with up to 8 concurrent page requests per profile). Start with a small list to get a feel for the timing before adding dozens of profiles.
+  </Accordion>
+  <Accordion title="Will the creator list persist between sessions?">
+    Yes. Save Sora stores your creator list in `chrome.storage.local`. The list is available the next time you open the popup without re-entering the profiles.
+  </Accordion>
+  <Accordion title="What data is captured from a creator profile?">
+    Save Sora captures the same fields available on any public profile page: video title, prompt, thumbnail, video URL, and engagement metadata such as like and view counts.
+  </Accordion>
+</AccordionGroup>
+
+<Tip>
+If you follow a creator whose content you want to preserve, add them to the Creators source now rather than waiting. Public Sora profiles can be deleted or made private at any time.
+</Tip>

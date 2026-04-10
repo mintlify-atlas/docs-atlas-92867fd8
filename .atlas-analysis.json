@@ -1,0 +1,78 @@
+{
+  "projectType": "general",
+  "projectName": "Save Sora",
+  "projectDescription": "A Chrome extension that lets you bulk fetch, rename, and selectively download your Sora published videos, drafts, liked videos, and cameo appearances directly from your logged-in browser session.",
+  "theme": "almond",
+  "primaryColor": "#6C63FF",
+  "lightColor": null,
+  "darkColor": null,
+  "navigation": {
+    "groups": [
+      {
+        "group": "Get Started",
+        "pages": [
+          "introduction",
+          "installation",
+          "quickstart"
+        ]
+      },
+      {
+        "group": "Using Save Sora",
+        "pages": [
+          "guides/fetching-videos",
+          "guides/reviewing-and-selecting",
+          "guides/downloading",
+          "guides/renaming",
+          "guides/exporting-prompts-and-urls"
+        ]
+      },
+      {
+        "group": "Sources",
+        "pages": [
+          "sources/overview",
+          "sources/published",
+          "sources/drafts",
+          "sources/likes-and-cameos",
+          "sources/creators"
+        ]
+      },
+      {
+        "group": "Configuration & Maintenance",
+        "pages": [
+          "configuration/settings",
+          "configuration/updater",
+          "configuration/storage",
+          "troubleshooting"
+        ]
+      },
+      {
+        "group": "Privacy & Legal",
+        "pages": [
+          "privacy/privacy-policy",
+          "privacy/permissions"
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "Bulk fetch published videos, drafts, liked videos, cameo appearances, and creator feeds from a logged-in Sora session",
+    "Review and selectively download only the videos you want",
+    "Rename videos before downloading to control filenames",
+    "Download as a single ZIP archive or as individual files",
+    "Export prompts or video URLs as CSV",
+    "Sort by newest, oldest, most likes, most views, or most remixed",
+    "Search and filter your video library",
+    "Automatic update checker that self-updates the unpacked extension from GitHub releases",
+    "All data stays local — no tokens or credentials sent to external servers",
+    "Dark and light theme with fullscreen or windowed popup modes"
+  ],
+  "publicApiSurface": [
+    "Sources: profile (Published), drafts, likes, characters (Cameos), characterAccounts, creators",
+    "Download modes: ZIP archive, individual files",
+    "Export types: prompts CSV, URLs CSV",
+    "Sort options: newest, oldest, likes, views, remixes",
+    "chrome.storage.local settings: maxVideos, defaultSources, defaultSort, defaultResultsLayout, defaultTheme, defaultShell, downloadMode, automaticUpdatesEnabled",
+    "Background messages: FETCH, ABORT_SCAN, PAUSE_SCAN, RESUME_SCAN, DOWNLOAD_SELECTED, RESET_STATE, START_ARCHIVE_BUILD, ABORT_ARCHIVE_BUILD",
+    "Updater: automatic GitHub release checks every 30 minutes, self-patch via linked install folder"
+  ]
+}

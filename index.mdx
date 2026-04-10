@@ -1,97 +1,67 @@
 ---
-title: "Introduction"
-description: "Welcome to the new home for your documentation"
+title: "Save Sora: Bulk download your Sora video library"
+description: "Save Sora is a free Chrome extension for bulk downloading your Sora videos locally — fetch, rename, and selectively save published videos, drafts, and likes."
 ---
 
-## Setting up
+Save Sora is an open-source Chrome extension built for one purpose: helping you back up your own Sora videos before they're gone. It connects to your existing logged-in Sora session, builds a local review list inside the popup, and lets you search, sort, rename, and selectively download exactly what you want — packaged neatly into a ZIP archive or saved as individual files.
 
-Get your documentation site up and running in minutes.
-
-<Card
-  title="Start here"
-  icon="rocket"
-  href="/quickstart"
-  horizontal
->
-  Follow our three step quickstart guide.
-</Card>
-
-## Make it yours
-
-Design a docs site that looks great and empowers your users.
-
-<Columns cols={2}>
-  <Card
-    title="Edit locally"
-    icon="pen-to-square"
-    href="/development"
-  >
-    Edit your docs locally and preview them in real time.
+<CardGroup cols={2}>
+  <Card title="Install the extension" icon="puzzle-piece" href="/installation">
+    Load Save Sora into Chrome in under two minutes — no build step required.
   </Card>
-  <Card
-    title="Customize your site"
-    icon="palette"
-    href="/essentials/settings"
-  >
-    Customize the design and colors of your site to match your brand.
+  <Card title="Quick start" icon="rocket" href="/quickstart">
+    Fetch your library, pick what to keep, and download your first ZIP.
   </Card>
-    <Card
-    title="Set up navigation"
-    icon="map"
-    href="/essentials/navigation"
-  >
-    Organize your docs to help users find what they need and succeed with your product.
+  <Card title="Understand sources" icon="layer-group" href="/sources/overview">
+    Learn which Sora sources you can pull from: Published, Drafts, Likes, Cameos, and Creators.
   </Card>
-  <Card
-    title="API documentation"
-    icon="terminal"
-    href="/api-reference/introduction"
-  >
-    Auto-generate API documentation from OpenAPI specifications.
+  <Card title="Settings & updater" icon="gear" href="/configuration/settings">
+    Customize defaults, enable automatic updates, and manage local storage.
   </Card>
-</Columns>
+</CardGroup>
 
-## Create beautiful pages
+## What Save Sora does
 
-Everything you need to create world-class documentation.
+Save Sora opens an inactive Sora tab in Chrome, injects its own packaged code into that tab, reads your library through your existing signed-in session, and presents everything in a popup dashboard. Nothing leaves your browser — no tokens, no cookies, no server uploads.
 
-<Columns cols={2}>
-  <Card
-    title="Write with MDX"
-    icon="pen-fancy"
-    href="/essentials/markdown"
-  >
-    Use MDX to style your docs pages.
+<CardGroup cols={3}>
+  <Card title="Bulk fetch" icon="download">
+    Pull published posts, drafts, liked videos, cameo appearances, and creator feeds in one scan.
   </Card>
-  <Card
-    title="Code samples"
-    icon="code"
-    href="/essentials/code"
-  >
-    Add sample code to demonstrate how to use your product.
+  <Card title="Rename before download" icon="pencil">
+    Edit any title in the list — Save Sora uses your renamed title as the downloaded filename.
   </Card>
-  <Card
-    title="Images"
-    icon="image"
-    href="/essentials/images"
-  >
-    Display images and other media.
+  <Card title="Selective download" icon="check-square">
+    Check only the videos you want. Download as a single ZIP or as individual files.
   </Card>
-  <Card
-    title="Reusable snippets"
-    icon="recycle"
-    href="/essentials/reusable-snippets"
-  >
-    Write once and reuse across your docs.
+  <Card title="Export prompts & URLs" icon="file-csv">
+    Save a CSV of your video prompts or direct Sora page URLs for your records.
   </Card>
-</Columns>
+  <Card title="Sort & search" icon="magnifying-glass">
+    Filter by keyword and sort by newest, oldest, most likes, most views, or most remixed.
+  </Card>
+  <Card title="Auto-updater" icon="arrows-rotate">
+    Save Sora checks GitHub for new releases every 30 minutes and can self-update your unpacked install.
+  </Card>
+</CardGroup>
 
-## Need inspiration?
+## How it works
 
-<Card
-  title="See complete examples"
-  icon="stars"
-  href="https://mintlify.com/customers"
->
-  Browse our showcase of exceptional documentation sites.
-</Card>
+<Steps>
+  <Step title="Install the extension">
+    Download the repository as a ZIP, unzip it, open `chrome://extensions`, enable **Developer mode**, and click **Load unpacked** to select the folder.
+  </Step>
+  <Step title="Sign in to Sora">
+    Open [sora.chatgpt.com](https://sora.chatgpt.com) in the same Chrome profile and sign in normally. Save Sora uses your existing session — no passwords or tokens to paste.
+  </Step>
+  <Step title="Open the popup and fetch">
+    Click the Save Sora extension icon, choose your sources (Published, Drafts, Likes, etc.), and click **Fetch Videos**.
+  </Step>
+  <Step title="Review, rename, and download">
+    Browse the list, rename anything you want, check your selections, and click **Download Videos** to save your archive.
+  </Step>
+</Steps>
+
+<Note>
+  Save Sora is designed for desktop Chrome. It does not work on mobile browsers or other Chromium-based browsers that don't support Manifest V3 extensions with the required permissions.
+</Note>

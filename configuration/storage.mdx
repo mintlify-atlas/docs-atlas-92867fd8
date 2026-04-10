@@ -1,0 +1,106 @@
+---
+title: "Managing Save Sora's local storage"
+description: "Learn what Save Sora stores in chrome.storage.local and IndexedDB, which clear button removes which data, and when each reset option is the right choice."
+---
+
+Save Sora keeps all of its data on your machine — nothing is sent to a remote server. Understanding what is stored and where makes it easier to diagnose unexpected behavior and know which reset action to use. The Storage section in Settings gives you two targeted clear buttons so you can wipe only the data you need to reset.
+
+## What Save Sora stores
+
+Save Sora uses two independent storage areas:
+
+<CardGroup cols={2}>
+  <Card title="chrome.storage.local" icon="hard-drive">
+    Holds settings, renamed video titles, selection state, downloaded state, removed items, and the current working set. This is the primary extension data store.
+  </Card>
+  <Card title="IndexedDB — saveSoraVolatileBackup" icon="database">
+    Holds resumable fetch checkpoints and preview backups for large creator and character crawls, plus the updater folder link record and updater history.
+  </Card>
+</CardGroup>
+
+### chrome.storage.local contents
+
+| Data | Description |
+|------|-------------|
+| Settings | Max videos cap, default sources, sort order, layout, theme, shell preference, download mode, and the automatic-updates toggle |
+| Renamed titles | Any custom names you have given to videos in the picker |
+| Selection state | Which videos are checked for download |
+| Downloaded state | Which videos have already been downloaded |
+| Removed items | Videos you have removed from the working set |
+| Working set | The current fetched list of videos |
+
+### IndexedDB contents
+
+| Store | Description |
+|-------|-------------|
+| `items` | Fetched video items staged for large crawl backup |
+| `meta` | Session metadata and crawl progress checkpoints |
+| `updater` | The linked install folder handle and updater history |
+
+<Note>
+  The updater folder link is stored in IndexedDB, not in `chrome.storage.local`. This is intentional — clearing local storage does **not** remove your folder link, so the updater keeps working after a storage reset.
+</Note>
+
+## Clearing local storage
+
+Go to **Settings › Storage** and click **Clear local storage**.
+
+A confirmation dialog will appear:
+
+> "Clear all saved Save Sora local data? This removes saved settings, renamed titles, selection state, and the current working set. Your updater folder link and resumable updater data will stay intact."
+
+Click **OK** to proceed. The status line will show **"Local storage cleared."** when done.
+
+**What is removed:**
+- All settings (the form resets to defaults on the next open)
+- Renamed video titles
+- Selection state and the current working set
+- Downloaded and removed item records
+
+**What is kept:**
+- Your updater install folder link
+- Updater history and pending update data
+- Resumable fetch checkpoints (IndexedDB)
+
+<Warning>
+  Renamed titles cannot be recovered after a local storage clear. If you have renamed many videos, consider noting important names before clearing.
+</Warning>
+
+## Clearing the resumable backup cache
+
+Go to **Settings › Storage** and click **Clear resumable backup cache**.
+
+A confirmation dialog will appear:
+
+> "Clear resumable fetch backup data? This removes saved crawl checkpoints and preview backups for large fetches, but keeps your updater folder link, updater history, and normal settings."
+
+Click **OK** to proceed.
+
+**What is removed:**
+- IndexedDB crawl checkpoints (the `items` and `meta` stores in `saveSoraVolatileBackup`)
+- Preview backups for large creator and character fetches
+
+**What is kept:**
+- All `chrome.storage.local` data (settings, renamed titles, working set)
+- Your updater install folder link and updater history
+
+<Info>
+  The resumable backup cache can grow large after several interrupted creator or character crawls. Clearing it is safe and will not affect your settings or video list — it only removes the ability to resume a previously interrupted large crawl.
+</Info>
+
+## When to clear storage
+
+<AccordionGroup>
+  <Accordion title="The popup shows stale or unexpected data">
+    Clear local storage to wipe the working set and force Save Sora to start fresh on the next fetch. Your settings will reset to defaults, but you can reconfigure them in a few seconds.
+  </Accordion>
+  <Accordion title="A large creator or character crawl is stuck">
+    Clear the resumable backup cache to discard corrupted or outdated checkpoints. This lets Save Sora start that crawl from scratch without affecting your settings or other video lists.
+  </Accordion>
+  <Accordion title="After a major update changes the data format">
+    If a new Save Sora release changes how the working set or settings are stored, clearing local storage ensures the extension starts with a clean, compatible state.
+  </Accordion>
+  <Accordion title="You want a completely fresh start">
+    Clear local storage first, then clear the resumable backup cache. The only thing that will remain is your updater folder link.
+  </Accordion>
+</AccordionGroup>

@@ -1,0 +1,72 @@
+---
+title: "Install Save Sora in Chrome"
+description: "How to download the Save Sora repository and load it as an unpacked Chrome extension — no build step, no Chrome Web Store listing required."
+---
+
+Installation takes fewer than two minutes. Save Sora is not on the Chrome Web Store, so you load it directly from the downloaded repository folder using Chrome's built-in **Developer mode**. No terminal commands or build steps are required for end users.
+
+## Prerequisites
+
+- A desktop or laptop running Google Chrome (not a Chromium fork or mobile browser).
+- A Sora account at [sora.chatgpt.com](https://sora.chatgpt.com) that you can sign in to in the same Chrome profile where you install the extension.
+
+<Info>
+  Save Sora reads your library through your existing signed-in Sora session. Both the extension and your Sora tab must be in the same Chrome profile.
+</Info>
+
+## Install the extension
+
+<Steps>
+  <Step title="Open the GitHub repository">
+    Go to [github.com/alpha1337/save-sora](https://github.com/alpha1337/save-sora) in your browser.
+  </Step>
+  <Step title="Download the repository as a ZIP">
+    Click the green **Code** button, then click **Download ZIP**. Wait for the download to finish.
+  </Step>
+  <Step title="Unzip the folder">
+    Find the downloaded file (usually `save-sora-main.zip`) in your Downloads folder and unzip it. This creates a folder called `save-sora-main` (or similar) containing `manifest.json`, `background.js`, and the rest of the extension files.
+  </Step>
+  <Step title="Open Chrome extensions">
+    In Chrome, navigate to `chrome://extensions` in the address bar and press Enter.
+  </Step>
+  <Step title="Enable Developer mode">
+    In the top-right corner of the Extensions page, toggle **Developer mode** on. The page will refresh and show additional options including **Load unpacked**.
+  </Step>
+  <Step title="Click Load unpacked">
+    Click the **Load unpacked** button that appears after enabling Developer mode.
+  </Step>
+  <Step title="Select the unzipped folder">
+    In the file picker, navigate to and select the unzipped `save-sora-main` folder — the one that contains `manifest.json` at its root. Click **Select Folder** (or **Open** on macOS).
+  </Step>
+</Steps>
+
+## Verify the installation
+
+After loading the folder, the **Save Sora: Sora Bulk Downloader** card appears on the `chrome://extensions` page with no errors. The Save Sora icon also appears in the Chrome toolbar (you may need to click the puzzle-piece extensions menu and pin it).
+
+<Tip>
+  Pin the Save Sora icon to your toolbar so it's always one click away. Click the puzzle-piece icon in the top-right of Chrome, find **Save Sora: Sora Bulk Downloader**, and click the pin icon next to it.
+</Tip>
+
+## Open Sora in the same Chrome profile
+
+Before using Save Sora for the first time, open [sora.chatgpt.com](https://sora.chatgpt.com) in the same Chrome profile and sign in normally. Save Sora uses the session already present in that tab — it does not ask for passwords, tokens, or cookies.
+
+<Warning>
+  Save Sora is loaded as an unpacked extension, not installed from the Chrome Web Store. Chrome may show a reminder about developer-mode extensions each time it starts. This is expected behavior for unpacked extensions and does not indicate a problem.
+</Warning>
+
+## Auto-updater
+
+Save Sora includes a built-in updater that checks the [GitHub Releases](https://github.com/alpha1337/save-sora/releases) page every 30 minutes using a `chrome.alarms` alarm. When a new release is available, the popup shows an update gate screen before the dashboard opens, offering you the option to install the update or skip it. The updater patches your existing unpacked install folder in place — you do not need to repeat the Load unpacked steps for routine updates.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Quick start" icon="rocket" href="/quickstart">
+    Fetch your library and download your first ZIP in five minutes.
+  </Card>
+  <Card title="Understand sources" icon="layer-group" href="/sources/overview">
+    Learn which Sora sources you can pull from: Published, Drafts, Likes, Cameos, and Creators.
+  </Card>
+</CardGroup>

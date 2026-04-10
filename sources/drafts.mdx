@@ -1,0 +1,36 @@
+---
+title: 'Fetching your unpublished Sora drafts with Save Sora'
+description: 'How Save Sora fetches your private Sora drafts, what metadata is captured for each draft, and why draft backup is more urgent than published video backup.'
+---
+
+The **Drafts** source fetches your unpublished video drafts saved in your Sora account. Unlike published videos, drafts are private — they are not visible to anyone else and are stored only within your account. Save Sora reads them from `sora.chatgpt.com/drafts` using your existing logged-in browser session and loads them into the popup review list alongside any other sources you have selected.
+
+<Warning>
+Drafts are often the first content lost when a Sora account is closed or suspended. Back up your drafts regularly — do not assume they will always be accessible.
+</Warning>
+
+## How fetching works
+
+When you select **Drafts** and start a fetch, Save Sora opens an inactive Sora tab in your current Chrome profile, injects packaged extension code into that tab using `chrome.scripting`, and reads your drafts feed from the signed-in session already present in the browser.
+
+The fetch reads up to **100 drafts per batch** (`DRAFT_BATCH_LIMIT = 100`). For accounts with large draft libraries, Save Sora pages through the feed automatically until all available drafts have been collected.
+
+## Data captured
+
+For each draft, Save Sora captures:
+
+- **Title** — the draft's display name
+- **Prompt** — the text prompt used to generate the draft
+- **Thumbnail** — the preview image displayed in the review list
+
+<Note>
+Drafts do not have public view counts or like counts because they have never been posted. These metadata fields are not available for the Drafts source.
+</Note>
+
+## Combining with Published
+
+You can select both **Drafts** and **Published** at the same time. Save Sora will fetch both feeds in the same run and merge the results into a single review list. This is the recommended approach when performing a full account backup — you capture your complete library of posted videos and your private drafts in one pass.
+
+<Tip>
+After installing Save Sora, run a combined Published and Drafts fetch immediately. Drafts in particular can disappear without warning if access to your account changes.
+</Tip>
